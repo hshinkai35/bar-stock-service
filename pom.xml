@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.springframework</groupId>
+    <artifactId>gs-rest-service</artifactId>
+    <version>0.1.0</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.3.RELEASE</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>2.0.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+
+    </dependencies>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <db.url>jdbc:mysql://localhost:13306/bar?useSSL=false</db.url>
+        <db.user>root</db.user>
+        <db.password>shinkai35</db.password>
+    </properties>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>9</source>
+                    <target>9</target>
+                </configuration>
+            </plugin>
+            <!-- jOOQ code generator plugin -->
+            <!--<plugin>-->
+                <!--<groupId>org.jooq</groupId>-->
+                <!--<artifactId>jooq-codegen-maven</artifactId>-->
+                <!--<version>${jooq.version}</version>-->
+                <!--&lt;!&ndash; common configuration shared by all executions &ndash;&gt;-->
+                <!--<configuration>-->
+                    <!--<jdbc>-->
+                        <!--<driver>com.mysql.jdbc.Driver</driver>-->
+                        <!--<url>${db.url}</url>-->
+                        <!--<user>${db.user}</user>-->
+                        <!--<password>${db.password}</password>-->
+                    <!--</jdbc>-->
+                    <!--<generator>-->
+                        <!--<name>org.jooq.util.DefaultGenerator</name>-->
+                        <!--<database>-->
+                            <!--<name>org.jooq.util.mysql.MySQLDatabase</name>-->
+                            <!--<inputSchema>bar</inputSchema>-->
+                            <!--<includes>.*</includes>-->
+                            <!--<excludes>schema_version</excludes>-->
+                        <!--</database>-->
+                        <!--<target>-->
+                            <!--<packageName>generated</packageName>-->
+                            <!--<directory>src/main/java</directory>-->
+                        <!--</target>-->
+                        <!--<generate>-->
+                            <!--<javaTimeTypes>true</javaTimeTypes>-->
+                        <!--</generate>-->
+                        <!--&lt;!&ndash;<strategy>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<matchers>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<tables>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<table>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;&lt;!&ndash; filtered_selling_product_pricesビューのレコードをinterfaceにする &ndash;&gt;&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<expression>filtered_.+_selling_product_prices</expression>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<recordImplements>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;jp.co.valus.ps2.infrastructure.jooq_config.record.IFilteredSellingProductPricesRecord&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</recordImplements>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</table>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<table>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;&lt;!&ndash; filtered_selling_product_price_historiesビューのレコードをinterfaceにする &ndash;&gt;&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<expression>filtered_.+_selling_product_price_histories</expression>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<recordImplements>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;jp.co.valus.ps2.infrastructure.jooq_config.record.IFilteredSellingProductPriceHistoriesRecord&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</recordImplements>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</table>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<table>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;&lt;!&ndash; data_export_requestsとdata_export_condition_stocksのレコードに共通のinterfaceを実装させる &ndash;&gt;&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<expression>data_export_requests|data_export_condition_stocks</expression>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<recordImplements>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;jp.co.valus.ps2.infrastructure.jooq_config.record.IDataExportConditionRecord&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</recordImplements>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</table>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<table>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;&lt;!&ndash; alert_rulesとalert_executionsのレコードに共通のinterfaceを実装させる &ndash;&gt;&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<expression>alert_rules|alert_executions</expression>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<recordImplements>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;jp.co.valus.ps2.infrastructure.jooq_config.record.IAlertConditionRecord&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</recordImplements>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</table>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</tables>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</matchers>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</strategy>&ndash;&gt;-->
+                    <!--</generator>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                <!--<execution>-->
+                <!--<id>generate-source-code</id>-->
+                <!--<phase>generate-sources</phase>-->
+                <!--<goals>-->
+                <!--<goal>generate</goal>-->
+                <!--</goals>-->
+                <!--</execution>-->
+                <!--</executions>-->
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>mysql</groupId>-->
+                        <!--<artifactId>mysql-connector-java</artifactId>-->
+                        <!--<version>5.1.39</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
+        </plugins>
+
+    </build>
+
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
