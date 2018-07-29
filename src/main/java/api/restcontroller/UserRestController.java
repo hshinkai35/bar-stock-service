@@ -4,37 +4,47 @@ import api.dto.UserDto;
 import api.entitiy.User;
 import api.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/users")
 public class UserRestController {
 
     private final UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<User> getUsers() {
         return userService.getUsers();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public User getUser(@PathVariable Long id) {
         return userService.getUser(id);
     }
 
-    @PostMapping("/users")
-    public void createUser(@RequestBody UserDto dto) {
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public String createUser(@RequestBody UserDto dto) {
         userService.create(dto);
+        return "{}";
     }
 
-    @PutMapping("/users/{id}")
-    public void update(@PathVariable Long id, @RequestBody UserDto dto) {
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String update(@PathVariable Long id, @RequestBody UserDto dto) {
         userService.update(id, dto);
+        return "{}";
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }

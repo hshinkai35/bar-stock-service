@@ -6,37 +6,46 @@ import api.entitiy.Product;
 import api.dto.ProductDto;
 import api.entitiy.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import api.service.ProductService;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/products")
 public class ProductRestController {
 
     private final ProductService productService;
 
-    @GetMapping("/products")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<Product> getProducts() {
         return productService.getProducts();
     }
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Product getProduct(@PathVariable Long id) {
         return productService.getProduct(id);
     }
 
-    @PostMapping("/products")
-    public void createProduct(@RequestBody ProductDto dto) {
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public String createProduct(@RequestBody ProductDto dto) {
         productService.create(dto);
+        return "{}";
     }
 
-    @PatchMapping("/products/{id}")
-    public void updateNumberOfStock(@PathVariable Long id, @RequestBody Integer num) {
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String updateNumberOfStock(@PathVariable Long id, @RequestBody Integer num) {
         productService.updateNumberStock(id, num);
+        return "{}";
     }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
